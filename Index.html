@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Fuse Discount Code</title>
+
+  <!-- Markdown display styles -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown.min.css"
+  >
+
+  <!-- Markdown parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f3f4f6;
+      color: #1f2937;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      padding: 28px 16px;
+      text-align: center;
+      color: white;
+      background: #111827;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    header p {
+      margin-bottom: 0;
+      color: #d1d5db;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 28px auto;
+      padding: 28px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    #status {
+      text-align: center;
+      padding: 20px;
+      color: #4b5563;
+    }
+
+    #readme {
+      overflow-wrap: anywhere;
+    }
+
+    #readme img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    footer {
+      padding: 20px;
+      text-align: center;
+      color: #6b7280;
+    }
+
+    footer a {
+      color: #2563eb;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        margin: 12px;
+        padding: 16px;
+      }
+
+      header h1 {
+        font-size: 23px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Fuse Discount Code</h1>
+    <p>Discount codes, project information and updates</p>
+  </header>
+
+  <main>
+    <div id="status">Loading project README...</div>
+    <article id="readme" class="markdown-body"></article>
+  </main>
+
+  <footer>
+    <p>
+      GitHub:
+      <a
+        href="https://github.com/ashaic2026/Fuse-discount-Code"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View source repository
+      </a>
+    </p>
+    <p>Deployed with Vercel</p>
+  </footer>
+
+  <script>
+    const username = "ashaic2026";
+    const repository = "Fuse-discount-Code";
+
+    const apiUrl =
+      `https://api.github.com/repos/${username}/${repository}/readme`;
+
+    async function loadReadme() {
+      const status = document.getElementById("status");
+      const output = document.getElementById("readme");
+
+      try {
+        const response = await fetch(apiUrl, {
+          headers: {
+            Accept: "application/vnd.github.raw+json"
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            response.status === 404
+              ? "README.md was not found. Please check your repository."
+              : `Unable to load README. Error: ${response.status}`
+          );
+        }
+
+        const markdown = await response.text();
+
+        output.innerHTML = marked.parse(markdown);
+        status.hidden = true;
+
+        document.title = "Fuse Discount Code";
+      } catch (error) {
+        status.replaceChildren();
+
+        const message = document.createElement("p");
+        message.textContent = error.message;
+        status.appendChild(message);
+
+        const link = document.createElement("a");
+        link.href =
+          `https://github.com/${username}/${repository}`;
+        link.textContent = "Open Fuse-discount-Code on GitHub";
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+
+        status.appendChild(link);
+      }
+    }
+
+    loadReadme();
+  </script>
+
+</body>
+</html>
